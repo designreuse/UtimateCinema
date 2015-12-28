@@ -21,7 +21,7 @@ public class HibernatePageableDao<T, ID extends Serializable>
 	@Transactional
 	@SuppressWarnings("unchecked")
 	public PageResult<T> findAll(int page, int pageSize) {
-		int total = this.count();
+		long total = this.count();
 		List<T> items = getCurrentSession()
 				.createQuery("from " + this.type.getName())
 				.setFirstResult(pageSize * (page - 1))

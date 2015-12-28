@@ -18,7 +18,7 @@ public interface GenericDao<T, ID extends Serializable> {
 
 	List<T> findAll();
 
-	Integer count();
+	Long count();
 
 	void delete(ID primaryKey);
 

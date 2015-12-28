@@ -53,9 +53,8 @@ public class HibernateCurdDao<T, ID extends Serializable>
 
 	@Transactional
 	@SuppressWarnings("unchecked")
-	public Integer count() {
-		return ((Number) getCurrentSession().
-				createQuery("select count(*) from " + this.type.getName()).uniqueResult()).intValue();
+	public Long count() {
+		return (Long) getCurrentSession().createQuery("select count(*) from " + this.type.getName()).uniqueResult();
 	}
 
 	@Transactional

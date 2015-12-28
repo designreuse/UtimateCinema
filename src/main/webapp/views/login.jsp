@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    String basePath = request.getContextPath();
-%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="/struts-tags" prefix="s" %>
+<% String basePath = request.getContextPath(); %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -9,12 +9,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Starter Template for Bootstrap</title>
+    <title>登录</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="<%=basePath%>/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<%=basePath%>/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="<%=basePath%>/static/styles/common.css" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value='/static/bootstrap/css/bootstrap.min.css' />" />
+    <link rel="stylesheet" href="<c:url value='/static/styles/start.css' />" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -22,45 +20,72 @@
     <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-
 <body>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Project name</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div><!--/.nav-collapse -->
-    </div>
-</nav>
-
 <div class="container">
+    <form class="form-signin form-horizontal" id="loginForm">
+        <div class="form-signin-heading">
+            <h2>登录系统</h2>
+        </div>
+        <div class="form-group">
+            <label for="inputUsername" class="control-label col-sm-3">用户名</label>
+            <div class="col-sm-9">
+                <input type="text" id="inputUsername" class="form-control" name="user.username"
+                       required autofocus>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="control-label col-sm-3">密码</label>
+            <div class="col-sm-9">
+                <input type="password" id="inputPassword" class="form-control" name="user.password"
+                       required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="rememberMe" value="1"> 记住我</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <button type="submit" class="btn btn-primary ajax-submit">提交</button>
+                <a class="btn btn-default" href="<%=basePath%>/register">去注册</a>
+            </div>
+        </div>
+        <div class="col-sm-12" style="display: none;" id="response">
+            <div class="alert alert-danger alert-dismissible fade in" role="alert" >
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <p id="alert-text"></p>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </form>
+</div>
 
-    <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-    </div>
-
-</div><!-- /.container -->
-
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="<%=basePath%>/static/bootstrap/js/jquery-1.11.3.min.js"></script>
-<script src="<%=basePath%>/static/bootstrap/js/bootstrap.min.js"></script>
+<script src="<c:url value='/static/bootstrap/js/jquery-1.11.3.min.js' />" ></script>
+<script src="<c:url value='/static/bootstrap/js/bootstrap.min.js' />" ></script>
+<script>
+    $(document).ready(function() {
+        $('.ajax-submit').click(function() {
+            $.ajax({
+                url: "<%=basePath%>/login/verify",
+                type: "get",
+                dataType: "json",
+                data: $("#loginForm").serialize(),
+                success: function(response) {
+                    if (response.ret == "fail") {
+                        $('#alert-text').html(response.error);
+                        $('#response').fadeIn();
+                    }
+                }
+            });
+            return false;
+        });
+    });
+</script>
 </body>
 </html>

@@ -6,4 +6,10 @@
 
 <struts>
 	<constant name="struts.action.excludePattern" value="/static/.*?" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+
+	<package name="main" extends="json-default" />
+
+	<constant name="struts.convention.default.parent.package" value="main"/>
+	<constant name="struts.convention.result.path" value="/views" />
 </struts>

@@ -24,7 +24,7 @@ public class PageResult<T> implements Serializable {
 	/**
 	 * total size
 	 */
-	private int total;
+	private long total;
 
 	/**
 	 * items of current page
@@ -32,7 +32,7 @@ public class PageResult<T> implements Serializable {
 	private List<T> items;
 
 
-	public PageResult(int page, int pageSize, List<T> items, int total) {
+	public PageResult(int page, int pageSize, List<T> items, long total) {
 		this.page = page;
 		this.pageSize = pageSize;
 		this.items = items;
@@ -54,14 +54,14 @@ public class PageResult<T> implements Serializable {
 	/**
 	 * The total number of pages
 	 */
-	public int getPages() {
+	public long getPages() {
 		return (total + (pageSize - 1)) / pageSize;
 	}
 
 	/**
 	 * The total number of items without page
 	 */
-	public int getTotal() {
+	public long getTotal() {
 		return total;
 	}
 

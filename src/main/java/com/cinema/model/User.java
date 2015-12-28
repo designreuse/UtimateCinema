@@ -1,5 +1,6 @@
 package com.cinema.model;
 
+import org.apache.struts2.json.annotations.JSON;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
 
