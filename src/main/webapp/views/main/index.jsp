@@ -4,7 +4,6 @@
 <link rel="stylesheet" href="<c:url value='/static/styles/common.css' />" />
 </head>
 
-<body>
 <%@ include file="../templates/navbar.jsp" %>
 <%@ include file="../templates/footer.jsp"%>
 </body>

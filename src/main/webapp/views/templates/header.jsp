@@ -9,7 +9,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title}</title>
   <link rel="stylesheet" href="<c:url value='/static/bootstrap/css/bootstrap.min.css' />" />
-  <link rel="stylesheet" href="<c:url value='/static/bootstrap/css/bootstrap-theme.min.css' />" />
+  <link rel="stylesheet" href="<c:url value='/static/plugin/Font-Awesome/css/font-awesome.min.css' />" />
+  <link rel="stylesheet" href="<c:url value='/static/AdminLTE/css/AdminLTE.min.css' />" />
+  <link rel="stylesheet" href="<c:url value='/static/AdminLTE/css/skins/_all-skins.min.css' />" />
 
   <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
   <!--[if lt IE 9]>

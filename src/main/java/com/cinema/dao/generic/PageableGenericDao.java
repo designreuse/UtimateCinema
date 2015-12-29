@@ -1,7 +1,6 @@
 package com.cinema.dao.generic;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * PageableGenericDao
@@ -11,4 +10,5 @@ public interface PageableGenericDao<T, ID extends Serializable>
 		extends GenericDao<T, ID> {
 
 	PageResult<T> findAll(int page, int pageSize);
+	PageResult<T> findAllWithOrder(int page, int pageSize, String... orderArgs);
 }

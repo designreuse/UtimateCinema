@@ -1,10 +1,10 @@
 package com.cinema.dao.generic;
 
-import org.hibernate.Query;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Property;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * HibernatePageableDao
@@ -21,11 +21,25 @@ public class HibernatePageableDao<T, ID extends Serializable>
 	@Transactional
 	@SuppressWarnings("unchecked")
 	public PageResult<T> findAll(int page, int pageSize) {
-		long total = this.count();
-		List<T> items = getCurrentSession()
-				.createQuery("from " + this.type.getName())
-				.setFirstResult(pageSize * (page - 1))
-				.setMaxResults(pageSize).list();
-		return new PageResult<T>(page, pageSize, items, total);
+		Criteria criteria = getCurrentSession().createCriteria(type);
+		criteria.setFirstResult(pageSize * (page - 1));
+		criteria.setMaxResults(pageSize);
+		return new PageResult<T>(page, pageSize, criteria.list(), this.count());
+	}
+
+	@Transactional
+	@SuppressWarnings("unchecked")
+	public PageResult<T> findAllWithOrder(int page, int pageSize, String... orderArgs) {
+		Criteria criteria = getCurrentSession().createCriteria(type);
+		for (int i = 0; i < orderArgs.length; i += 2) {
+			if (orderArgs[i + 1].equals("asc")) {
+				criteria.addOrder(Property.forName(orderArgs[i]).asc());
+			} else if (orderArgs[i + 1].equals("desc")) {
+				criteria.addOrder(Property.forName(orderArgs[i]).desc());
+			}
+		}
+		criteria.setFirstResult(pageSize * (page - 1));
+		criteria.setMaxResults(pageSize);
+		return new PageResult<T>(page, pageSize, criteria.list(), this.count());
 	}
 }

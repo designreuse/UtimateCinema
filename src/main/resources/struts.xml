@@ -8,8 +8,41 @@
 	<constant name="struts.action.excludePattern" value="/static/.*?" />
 	<constant name="struts.i18n.encoding" value="UTF-8" />
 
-	<package name="main" extends="json-default" />
+	<package name="main" extends="json-default" >
+		<global-results>
+			<result name="json" type="json">
+				<param name="root">jsonResponse</param>
+			</result>
+		</global-results>
+	</package>
 
-	<constant name="struts.convention.default.parent.package" value="main"/>
+	<package name="auth" extends="json-default" >
+		<interceptors>
+			<interceptor name="authority" class="com.cinema.util.LoginInterceptor" />
+			<interceptor-stack name="mydefault">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="authority" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="mydefault" />
+		<global-results>
+			<result name="login" type="redirect">
+				<param name="location">/login</param>
+			</result>
+			<result name="admin" type="redirect">
+				<param name="location">/admin/users</param>
+			</result>
+			<result name="normal" type="redirect">
+				<param name="location">/index</param>
+			</result>
+			<result name="json" type="json">
+				<param name="root">jsonResponse</param>
+			</result>
+		</global-results>
+	</package>
+
+	<constant name="struts.convention.default.parent.package" value="auth"/>
 	<constant name="struts.convention.result.path" value="/views" />
+	<constant name="struts.multipart.saveDir" value="/tmp"/>
+	<constant name="struts.multipart.maxSize" value="4294967296" />
 </struts>

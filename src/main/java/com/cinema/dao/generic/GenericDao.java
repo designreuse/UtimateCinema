@@ -1,7 +1,6 @@
 package com.cinema.dao.generic;
 
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -13,6 +12,8 @@ public interface GenericDao<T, ID extends Serializable> {
 	<S extends T> S create(S entity);
 
 	<S extends T> void update(S entity);
+
+	<S extends T> void saveOrUpdate(S entity);
 
 	T findOne(ID primaryKey);
 

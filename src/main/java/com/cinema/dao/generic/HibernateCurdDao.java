@@ -40,6 +40,11 @@ public class HibernateCurdDao<T, ID extends Serializable>
 	}
 
 	@Transactional
+	public <S extends T> void saveOrUpdate(S entity) {
+		getCurrentSession().saveOrUpdate(entity);
+	}
+
+	@Transactional
 	@SuppressWarnings("unchecked")
 	public T findOne(ID primaryKey) {
 		return (T) getCurrentSession().get(type, primaryKey);

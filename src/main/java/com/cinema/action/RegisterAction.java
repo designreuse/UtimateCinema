@@ -6,10 +6,11 @@ import com.cinema.model.User;
 import com.cinema.util.LoginHelper;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+
+import java.util.Date;
 
 
 /**
@@ -42,27 +43,31 @@ public class RegisterAction extends BaseAction {
 		return INPUT;
 	}
 
-	@Action(value = "/register/post",
-			results = {
-					@Result(name = "success", type = "redirect",
-							params = {
-									"location", "login"
-							}),
-					@Result(name = "error", type = "json")
-			}
-	)
-	public String regsiter() {
+	@Action(value = "/register/post")
+	public String register() {
+		User has = userDao.findByUsername(username);
+		if (has != null) {
+			jsonResponse.put("ret", JsonResult.FAIL);
+			jsonResponse.put("error", "该用户名已被注册");
+			return "json";
+		}
 		User user = new User();
 		user.setUsername(username);
 		user.setPassword(password);
 		user.setEmail(email);
 		user.setPhone(phone);
 		user.setSex(sex == 1);
-		user.setAdmin(false);
-		user.setRegisterTime(LocalDateTime.now());
+		user.setAdmin(true);
+		user.setRegisterTime(new Date());
 		userDao.create(user);
-		LoginHelper.login(request, response, user, false);
-		return SUCCESS;
+		try {
+			LoginHelper.login(request, response, user, false);
+			jsonResponse.put("ret", JsonResult.OK);
+			jsonResponse.put("url", request.getContextPath() + "/");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "json";
 	}
 
 	public void setUsername(String username) {

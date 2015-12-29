@@ -37,7 +37,7 @@ public class Order implements Serializable {
 			orphanRemoval = false,
 			fetch = FetchType.LAZY
 	)
-	@OrderBy("row asc, column asc")
+	@OrderBy("row_num asc, col_num asc")
 	private Set<Seat> seats = new TreeSet<Seat>();
 
 	public long getId() {

@@ -29,20 +29,20 @@
         </div>
         <div class="form-group">
             <label for="inputUsername" class="control-label col-sm-3">用户名</label>
-            <div class="col-sm-9">
+            <div class="col-sm-8">
                 <input type="text" id="inputUsername" class="form-control" name="user.username"
                        required autofocus>
             </div>
         </div>
         <div class="form-group">
             <label for="inputPassword" class="control-label col-sm-3">密码</label>
-            <div class="col-sm-9">
+            <div class="col-sm-8">
                 <input type="password" id="inputPassword" class="form-control" name="user.password"
                        required>
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-9">
+            <div class="col-sm-offset-3 col-sm-8">
                 <div class="checkbox">
                     <label><input type="checkbox" name="rememberMe" value="1"> 记住我</label>
                 </div>
@@ -73,13 +73,15 @@
         $('.ajax-submit').click(function() {
             $.ajax({
                 url: "<%=basePath%>/login/verify",
-                type: "get",
+                type: "post",
                 dataType: "json",
                 data: $("#loginForm").serialize(),
                 success: function(response) {
                     if (response.ret == "fail") {
                         $('#alert-text').html(response.error);
                         $('#response').fadeIn();
+                    } else if (response.ret == "ok") {
+                        window.location.href = response.url;
                     }
                 }
             });

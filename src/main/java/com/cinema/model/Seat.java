@@ -15,10 +15,10 @@ public class Seat implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	@Column
+	@Column(name = "row_num")
 	private int rowNumber;
 
-	@Column
+	@Column(name = "col_name")
 	private int colNumber;
 
 	@ManyToOne(cascade = CascadeType.ALL)

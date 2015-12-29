@@ -26,42 +26,42 @@
     <div class="form-signin-heading"><h2>注册</h2></div>
     <div class="form-group">
       <label for="inputUsername" class="control-label col-sm-3">用户名</label>
-      <div class="col-sm-9">
+      <div class="col-sm-8">
         <input type="text" id="inputUsername" class="form-control" name="username"
                required autofocus>
       </div>
     </div>
     <div class="form-group">
       <label for="inputPassword" class="control-label col-sm-3">密码</label>
-      <div class="col-sm-9">
+      <div class="col-sm-8">
         <input type="password" id="inputPassword" class="form-control" name="password"
                required>
       </div>
     </div>
     <div class="form-group">
       <label for="inputPassword2" class="control-label col-sm-3">确认密码</label>
-      <div class="col-sm-9">
+      <div class="col-sm-8">
         <input type="password" id="inputPassword2" class="form-control" name="password2"
                required>
       </div>
     </div>
     <div class="form-group">
       <label for="inputEmail" class="control-label col-sm-3">邮箱</label>
-      <div class="col-sm-9">
+      <div class="col-sm-8">
         <input type="email" id="inputEmail" class="form-control" name="email"
                required>
       </div>
     </div>
     <div class="form-group">
       <label for="inputPhone" class="control-label col-sm-3">手机</label>
-      <div class="col-sm-9">
+      <div class="col-sm-8">
         <input type="text" id="inputPhone" class="form-control" name="phone"
                required>
       </div>
     </div>
     <div class="form-group">
       <label class="control-label col-sm-3">性别</label>
-      <div class="col-sm-9">
+      <div class="col-sm-8">
         <label class="radio-inline">
           <input type="radio" name="sex" id="inputSex1" value="1"> 男
         </label>
@@ -100,7 +100,7 @@
         return false;
       }
       $.ajax({
-        url: "<%=request.getContextPath()%>/register",
+        url: "<%=request.getContextPath()%>/register/post",
         type: "post",
         dataType: "json",
         data: $("#registerForm").serialize(),
@@ -108,6 +108,8 @@
           if (response.ret == "fail") {
             $('#alert-text').html(response.error);
             $('#response').fadeIn();
+          } else {
+            window.location.href = response.url;
           }
         }
       });

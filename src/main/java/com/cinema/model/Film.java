@@ -1,11 +1,10 @@
 package com.cinema.model;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDate;
+import org.apache.struts2.json.annotations.JSON;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Blob;
+import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -31,8 +30,8 @@ public class Film implements Serializable {
 	@Column
 	private String director;
 
-	@Column(length = 4096)
-	private String intro;
+	@Column
+	private String actors;
 
 	@Column
 	private String language;
@@ -41,11 +40,11 @@ public class Film implements Serializable {
 	private int length;
 
 	@Column(name = "premiere_date")
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-	private LocalDate premiereDate;
+	private Date premiereDate;
 
-	@Column
-	private String actors;
+	@Column(length = 4096)
+	private String intro;
+
 
 	@OneToMany(
 			mappedBy = "film",
@@ -67,14 +66,6 @@ public class Film implements Serializable {
 	private Set<CinemaSale> sales = new TreeSet<CinemaSale>();
 
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(
-			name = "film_film_type",
-			joinColumns = {@JoinColumn(name = "film_id")},
-			inverseJoinColumns = {@JoinColumn(name = "film_type_id")}
-	)
-	private Set<FilmType> types = new TreeSet<FilmType>();
-
 	public long getId() {
 		return id;
 	}
@@ -83,6 +74,7 @@ public class Film implements Serializable {
 		this.id = id;
 	}
 
+	@JSON(serialize = false)
 	public byte[] getPoster() {
 		return poster;
 	}
@@ -131,11 +123,12 @@ public class Film implements Serializable {
 		this.length = length;
 	}
 
-	public LocalDate getPremiereDate() {
+	@JSON(format = "yyyy-MM-dd")
+	public Date getPremiereDate() {
 		return premiereDate;
 	}
 
-	public void setPremiereDate(LocalDate premiereDate) {
+	public void setPremiereDate(Date premiereDate) {
 		this.premiereDate = premiereDate;
 	}
 
@@ -147,6 +140,7 @@ public class Film implements Serializable {
 		this.actors = actors;
 	}
 
+	@JSON(serialize = false)
 	public Set<Comment> getComments() {
 		return comments;
 	}
@@ -155,6 +149,7 @@ public class Film implements Serializable {
 		this.comments = comments;
 	}
 
+	@JSON(serialize = false)
 	public Set<CinemaSale> getSales() {
 		return sales;
 	}
@@ -163,11 +158,4 @@ public class Film implements Serializable {
 		this.sales = sales;
 	}
 
-	public Set<FilmType> getTypes() {
-		return types;
-	}
-
-	public void setTypes(Set<FilmType> types) {
-		this.types = types;
-	}
 }
