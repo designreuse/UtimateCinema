@@ -23,13 +23,14 @@
             <div class="caption">
                 <h4>${film.filmName}</h4>
                 <p>
-                    <a href="<s:url value="/film/sales"><s:param name="filmId">${film.id}</s:param></s:url>"
+                    <a href="<%=basePath%>/film/sales?filmId=${film.id}"
                        class="btn btn-primary" role="button">订票</a>
                 </p>
             </div>
         </div>
     </div>
 </c:forEach>
+
 </div>
 </div>
 <%@ include file="../templates/footer.jsp"%>

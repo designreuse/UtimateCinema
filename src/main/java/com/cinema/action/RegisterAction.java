@@ -72,6 +72,19 @@ public class RegisterAction extends BaseAction {
 		return "json";
 	}
 
+	@Action(value = "/register/modify")
+	public String modify() {
+		User user = userDao.findByUsername(username);
+		user.setPassword(password);
+		user.setEmail(email);
+		user.setPhone(phone);
+		userDao.saveOrUpdate(user);
+		//更新session信息
+		session.setAttribute(LoginHelper.USER_SESSION,user);
+		jsonResponse.put("ret", JsonResult.OK);
+		return "json";
+	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}

@@ -3,6 +3,7 @@ package com.cinema.action;
 import com.cinema.action.base.BaseAction;
 import com.cinema.dao.FilmDao;
 import com.cinema.model.CinemaSale;
+import com.cinema.model.Comment;
 import com.cinema.model.Film;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -30,6 +31,7 @@ public class IndexAction extends BaseAction {
 	private String title;
 	private List<Film> filmList;
 	private Set<CinemaSale> saleSet;
+	private Set<Comment> commentSet;
 
 	private long filmId;
 	private Film film;
@@ -65,10 +67,10 @@ public class IndexAction extends BaseAction {
 			}
 	)
 	public String sales() {
-
 		film = filmDao.findOne(filmId);
 		saleSet = film.getSales();
 		title = film.getFilmName() + " - 订票";
+		commentSet = film.getComments();
 		return SUCCESS;
 	}
 
@@ -90,5 +92,9 @@ public class IndexAction extends BaseAction {
 
 	public Set<CinemaSale> getSaleSet() {
 		return saleSet;
+	}
+
+	public Set<Comment> getCommentSet() {
+		return commentSet;
 	}
 }

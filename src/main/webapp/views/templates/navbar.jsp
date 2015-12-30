@@ -20,9 +20,13 @@
               <li><a href="<%=basePath%>/admin/users">用户管理</a></li>
               <li><a href="<%=basePath%>/admin/films">影片管理</a></li>
               <li><a href="<%=basePath%>/admin/halls">影厅管理</a></li>
+              <li><a href="<%=basePath%>/admin/orders">所有订单</a></li>
             </c:when>
             <c:otherwise>
-              <li><a href="<%=basePath%>/index">首页 <span class="sr-only">(current)</span></a></li>
+              <li><a href="<%=basePath%>/index">最近电影 <span class="sr-only">(current)</span></a></li>
+              <c:if test="${sessionScope.current_user != null}">
+                <li><a href="<%=basePath%>/orders/self">我的订单</a></li>
+              </c:if>
             </c:otherwise>
           </c:choose>
         </ul>
@@ -39,6 +43,7 @@
               <ul class="dropdown-menu">
                 <li role="separator" class="divider"></li>
                 <li><a href="<%=basePath%>/logout">注销</a></li>
+                <li><a data-toggle="modal" data-target="#modifyModal" >修改信息</a></li>
               </ul>
             </li>
           </c:otherwise>
@@ -48,3 +53,22 @@
     </div>
   </nav>
 </header>
+
+<!-- Modal -->
+<div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">修改密码</h4>
+      </div>
+      <div class="modal-body">
+        <%@ include file="../admin/form/modify_form.jsp"%>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary " onclick="modifyUser()">确认修改</button>
+      </div>
+    </div>
+  </div>
+</div>

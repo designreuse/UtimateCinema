@@ -61,7 +61,7 @@ public class LoginAction extends BaseAction {
 				if (has.isAdmin()) {
 					jsonResponse.put("url", request.getContextPath() + "/admin/users");
 				} else {
-					jsonResponse.put("url", request.getContextPath() + "/login");
+					jsonResponse.put("url", request.getContextPath() + "/index");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -57,4 +57,11 @@ public class LoginInterceptor extends AbstractInterceptor {
         }
         return Action.LOGIN;
     }
+
+    private String getNextURL(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        String queryString = request.getQueryString();
+        if (queryString == null) queryString = "";
+        return path + "?" + queryString;
+    }
 }

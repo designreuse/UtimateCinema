@@ -4,8 +4,8 @@ import org.apache.struts2.json.annotations.JSON;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * CinemaSale
@@ -41,8 +41,8 @@ public class CinemaSale {
 			orphanRemoval = true,
 			fetch = FetchType.LAZY
 	)
-	@OrderBy("orderTime desc")
-	private Set<Order> orders = new TreeSet<Order>();
+	@OrderBy("order_time desc")
+	private Set<Order> orders = new HashSet<Order>();
 
 	@OneToMany(
 			mappedBy = "cinemaSale",
@@ -50,8 +50,8 @@ public class CinemaSale {
 			orphanRemoval = true,
 			fetch = FetchType.LAZY
 	)
-	@OrderBy("rowNumber asc, colNumber asc")
-	private Set<Seat> seats = new TreeSet<Seat>();
+	@OrderBy("row_num asc, col_num asc")
+	private Set<Seat> seats = new HashSet<Seat>();
 
 
 	public long getId() {
