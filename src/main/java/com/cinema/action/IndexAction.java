@@ -65,7 +65,6 @@ public class IndexAction extends BaseAction {
 			}
 	)
 	public String sales() {
-
 		film = filmDao.findOne(filmId);
 		saleSet = film.getSales();
 		title = film.getFilmName() + " - 订票";

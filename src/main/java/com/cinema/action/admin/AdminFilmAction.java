@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,7 +48,6 @@ public class AdminFilmAction extends BaseAction {
     private String intro;
     private File poster;
 
-    private InputStream inputStream;
 
 
     public AdminFilmAction() {
@@ -193,13 +191,5 @@ public class AdminFilmAction extends BaseAction {
 
     public void setOpt(String opt) {
         this.opt = opt;
-    }
-
-    public InputStream getInputStream() {
-        return inputStream;
-    }
-
-    public void setInputStream(InputStream inputStream) {
-        this.inputStream = inputStream;
     }
 }

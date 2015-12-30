@@ -1,6 +1,8 @@
 package com.cinema.util;
 
+import com.cinema.dao.UserDao;
 import com.cinema.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +17,11 @@ import java.net.URLEncoder;
  */
 public class LoginHelper {
 
+	@Autowired
+	private UserDao userDao;
+
 	public static final String USER_SESSION = "current_user";
+	public static final String NEXT_URL = "next_url";
 
 	public static void login(HttpServletRequest request, HttpServletResponse response,
 	                         User user, boolean remember)

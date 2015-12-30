@@ -4,8 +4,8 @@ import org.apache.struts2.json.annotations.JSON;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * CinemaHall
@@ -35,7 +35,7 @@ public class CinemaHall implements Serializable {
 			fetch = FetchType.LAZY
 	)
 	@OrderBy("start_time asc")
-	private Set<CinemaSale> sales = new TreeSet<CinemaSale>();
+	private Set<CinemaSale> sales = new HashSet<CinemaSale>();
 
 	public long getId() {
 		return id;

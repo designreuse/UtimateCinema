@@ -33,7 +33,8 @@ public class HibernateCurdDao<T, ID extends Serializable>
 	@Transactional
 	@SuppressWarnings("unchecked")
 	public <S extends T> S create(S entity) {
-		return (S) getCurrentSession().save(entity);
+		Serializable id = getCurrentSession().save(entity);
+		return (S) getCurrentSession().get(type, id);
 	}
 
 	@Transactional

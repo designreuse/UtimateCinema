@@ -11,7 +11,7 @@
     <div class="col-sm-12">
       <div class="box box-primary list-box">
         <div class="box-header with-border">
-          <h3 class="box-title"><i class="fa fa-list"></i> 所有订单</h3>
+          <h3 class="box-title"><i class="fa fa-list"></i> 我的订单</h3>
           <div class="box-tools">
             <button class="btn btn-default btn-sm to_refresh"><i class="fa fa-refresh"></i> &nbsp; 刷新列表</button>
           </div>
@@ -19,7 +19,7 @@
         <div class="box-body no-padding">
           <table class="table table-bordered table-hover table-striped list-table">
             <thead>
-            <tr><td>订单用户</td><th>影名</th><th>放映时间</th><th>订单时间</th><th>影厅</th><th>座位</th>
+            <tr><th>影名</th><th>放映时间</th><th>订单时间</th><th>影厅</th><th>座位</th>
               <th>金额</th></tr>
             </thead>
             <tbody class="list-table-body"></tbody>
@@ -39,13 +39,12 @@
   var $alertRow = $('#alert-row');
   var $alertMsg = $('#alert-msg');
 
-  var pageSize = 10;
+  var pageSize = 20;
   var $container = $('.list-table-body');
   var get_url = "<%=basePath%>/orders/get";
 
   function generate_item(order) {
     var ret = "<tr id='order" + order.id + "'>";
-    ret += "<td><b>" + order.user.username + "</b></td>";
     ret += "<td><b>" + order.cinemaSale.film.filmName + "</b></td>";
     ret += "<td><b>" + order.cinemaSale.startTime + "</b></td>";
     ret += "<td>" + order.orderTime + "</td>";
@@ -77,7 +76,7 @@
       var length = items.length;
       $container.empty();
       if (length == 0) {
-        $container.append('<tr><td colspan="7"><h2>无订单</h2></tr>');
+        $container.append('<tr><td colspan="6"><h2>无订单</h2></tr>');
       } else {
         for (var i = 0; i < length; ++i) {
           $container.append(generate_item(items[i]));
@@ -100,7 +99,7 @@
       }
     }).error(function() {
       $container.empty();
-      $container.append('<tr><td colspan="7"><h2>加载失败</h2></tr>');
+      $container.append('<tr><td colspan="6"><h2>加载失败</h2></tr>');
       $overlay.fadeOut(300);
       $prev.hide();
       $next.hide();

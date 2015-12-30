@@ -57,7 +57,7 @@
                     <td><fmt:formatDate value="${sale.endTime}" pattern="yyyy-MM-dd HH:mm" /></td>
                     <td>${sale.cinemaHall.name}</td>
                     <td>${sale.money}</td>
-                    <td><a href="" class="btn btn-primary btn-sm">选座</a></td>
+                    <td><a href="<%=basePath%>/sale/seat?saleId=${sale.id}" class="btn btn-primary btn-sm">选座</a></td>
                   </tr>
                 </c:forEach>
               </c:otherwise>

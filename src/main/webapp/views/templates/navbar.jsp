@@ -20,9 +20,13 @@
               <li><a href="<%=basePath%>/admin/users">用户管理</a></li>
               <li><a href="<%=basePath%>/admin/films">影片管理</a></li>
               <li><a href="<%=basePath%>/admin/halls">影厅管理</a></li>
+              <li><a href="<%=basePath%>/admin/orders">所有订单</a></li>
             </c:when>
             <c:otherwise>
-              <li><a href="<%=basePath%>/index">首页 <span class="sr-only">(current)</span></a></li>
+              <li><a href="<%=basePath%>/index">最近电影 <span class="sr-only">(current)</span></a></li>
+              <c:if test="${sessionScope.current_user != null}">
+                <li><a href="<%=basePath%>/orders/self">我的订单</a></li>
+              </c:if>
             </c:otherwise>
           </c:choose>
         </ul>

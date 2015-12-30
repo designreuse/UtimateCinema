@@ -5,8 +5,8 @@ import org.apache.struts2.json.annotations.JSON;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Order
@@ -33,11 +33,11 @@ public class Order implements Serializable {
 	@OneToMany(
 			mappedBy = "order",
 			cascade = CascadeType.ALL,
-			orphanRemoval = false,
+			orphanRemoval = true,
 			fetch = FetchType.EAGER
 	)
 	@OrderBy("row_num asc, col_num asc")
-	private Set<Seat> seats = new TreeSet<Seat>();
+	private Set<Seat> seats = new HashSet<Seat>();
 
 	public long getId() {
 		return id;
@@ -47,7 +47,7 @@ public class Order implements Serializable {
 		this.id = id;
 	}
 
-	@JSON(format = "yyyy-MM-dd HH:mm:ss")
+	@JSON(format = "yyyy-MM-dd HH:mm")
 	public Date getOrderTime() {
 		return orderTime;
 	}

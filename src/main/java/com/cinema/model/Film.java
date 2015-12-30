@@ -5,8 +5,8 @@ import org.apache.struts2.json.annotations.JSON;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Film
@@ -53,7 +53,7 @@ public class Film implements Serializable {
 			fetch = FetchType.LAZY
 	)
 	@OrderBy("post_time desc")
-	private Set<Comment> comments = new TreeSet<Comment>();
+	private Set<Comment> comments = new HashSet<Comment>();
 
 
 	@OneToMany(
@@ -62,8 +62,8 @@ public class Film implements Serializable {
 			orphanRemoval = true,
 			fetch = FetchType.LAZY
 	)
-	@OrderBy("startTime asc")
-	private Set<CinemaSale> sales = new TreeSet<CinemaSale>();
+	@OrderBy("start_time asc")
+	private Set<CinemaSale> sales = new HashSet<CinemaSale>();
 
 
 	public long getId() {
