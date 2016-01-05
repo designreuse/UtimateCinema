@@ -190,8 +190,8 @@
       };
       $.post(url, { "request": JSON.stringify(data) }, function(response) {
         if (response.ret == "ok") {
+          makeDisabled();
           $('#orderModal').modal('hide');
-
         }
       });
     });

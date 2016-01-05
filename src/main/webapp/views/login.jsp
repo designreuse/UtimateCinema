@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="/struts-tags" prefix="s" %>
 <% String basePath = request.getContextPath(); %>
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>

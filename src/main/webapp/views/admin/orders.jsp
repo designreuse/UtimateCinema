@@ -19,7 +19,7 @@
         <div class="box-body no-padding">
           <table class="table table-bordered table-hover table-striped list-table">
             <thead>
-            <tr><td>订单用户</td><th>影名</th><th>放映时间</th><th>订单时间</th><th>影厅</th><th>座位</th>
+            <tr><td>订单用户</td><th>影名</th><th>放映时间</th><th>订单时间</th><th>影厅</th><th>座位</th><
               <th>金额</th></tr>
             </thead>
             <tbody class="list-table-body"></tbody>

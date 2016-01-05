@@ -30,6 +30,7 @@
         </div>
     </div>
 </c:forEach>
+
 </div>
 </div>
 <%@ include file="../templates/footer.jsp"%>

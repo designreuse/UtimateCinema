@@ -30,6 +30,9 @@ public class Order implements Serializable {
 	@JoinColumn(name = "cinema_sale_id")
 	private CinemaSale cinemaSale;
 
+	@Column(name = "is_comment")
+	private boolean isComment;
+
 	@OneToMany(
 			mappedBy = "order",
 			cascade = CascadeType.ALL,
@@ -78,5 +81,13 @@ public class Order implements Serializable {
 
 	public void setSeats(Set<Seat> seats) {
 		this.seats = seats;
+	}
+
+	public boolean isComment() {
+		return isComment;
+	}
+
+	public void setIsComment(boolean isComment) {
+		this.isComment = isComment;
 	}
 }

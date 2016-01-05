@@ -46,6 +46,7 @@ public class Film implements Serializable {
 	private String intro;
 
 
+
 	@OneToMany(
 			mappedBy = "film",
 			cascade = CascadeType.ALL,
@@ -106,6 +107,8 @@ public class Film implements Serializable {
 	public void setIntro(String intro) {
 		this.intro = intro;
 	}
+
+
 
 	public String getLanguage() {
 		return language;

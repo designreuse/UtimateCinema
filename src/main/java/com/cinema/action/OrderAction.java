@@ -3,10 +3,7 @@ package com.cinema.action;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cinema.action.base.BaseAction;
-import com.cinema.dao.CinemaSaleDao;
-import com.cinema.dao.OrderDao;
-import com.cinema.dao.SeatDao;
-import com.cinema.dao.UserDao;
+import com.cinema.dao.*;
 import com.cinema.dao.generic.PageResult;
 import com.cinema.model.*;
 import com.cinema.util.LoginHelper;
@@ -38,10 +35,23 @@ public class OrderAction extends BaseAction {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private FilmDao filmDao;
+
+    @Autowired
+    private  CommentDao commentDao;
+
     private String title;
     private long saleId;
     private CinemaSale sale;
     private Film film;
+
+    //评论内容
+    private String commentName;
+    //评论电影id
+    private long filmId;
+    //评论订单ID
+    private long orderId;
 
     private int page;
     private int pageSize;
@@ -137,6 +147,56 @@ public class OrderAction extends BaseAction {
         return "json";
     }
 
+    @Action(value = "/orders/addComment")
+    public String addComment() {
+        User user = userDao.findOne(LoginHelper.getCurrentUser(session).getId());
+        Film film = filmDao.findOne(filmId);
+        Comment comment = new Comment();
+        comment.setContent(commentName);
+        comment.setFilm(film);
+        comment.setPostTime(new Date());
+        comment.setUser(user);
+        commentDao.create(comment);
+        Order order = orderDao.findOne(orderId);
+        order.setIsComment(true);
+        orderDao.saveOrUpdate(order);
+        jsonResponse.put("ret", JsonResult.OK);
+        return "json";
+    }
+
+    @Action(value = "/orders/getComments")
+    public String getComments(){
+        Film film = filmDao.findOne(filmId);
+        PageResult<Comment> pageResult = commentDao.findByFilm(page,pageSize,film,"postTime","desc");
+        jsonResponse.put("totalPage", pageResult.getPages());
+        jsonResponse.put("page", page);
+        jsonResponse.put("items", pageResult.getItems());
+        return "json";
+    }
+
+    public long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
+    }
+
+    public long getFilmId() {
+        return filmId;
+    }
+
+    public void setFilmId(long filmId) {
+        this.filmId = filmId;
+    }
+
+    public String getCommentName() {
+        return commentName;
+    }
+
+    public void setCommentName(String commentName) {
+        this.commentName = commentName;
+    }
 
     public String getTitle() {
         return title;
