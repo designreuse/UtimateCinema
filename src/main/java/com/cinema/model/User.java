@@ -5,8 +5,8 @@ import org.apache.struts2.json.annotations.JSON;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * User
@@ -48,7 +48,7 @@ public class User implements Serializable {
 			fetch = FetchType.LAZY
 	)
 	@OrderBy("post_time desc")
-	private Set<Comment> comments = new TreeSet<Comment>();
+	private Set<Comment> comments = new HashSet<Comment>();
 
 
 	@OneToMany(
@@ -58,7 +58,7 @@ public class User implements Serializable {
 			fetch = FetchType.LAZY
 	)
 	@OrderBy("order_time desc")
-	private Set<Order> orders = new TreeSet<Order>();
+	private Set<Order> orders = new HashSet<Order>();
 
 	public long getId() {
 		return id;

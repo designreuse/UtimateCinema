@@ -8,4 +8,6 @@ import com.cinema.model.CinemaHall;
  * Created by rayn on 2015/12/26.
  */
 public interface CinemaHallDao extends PageableGenericDao<CinemaHall, Long> {
+
+    CinemaHall findByName(String name);
 }

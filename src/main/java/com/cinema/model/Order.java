@@ -1,12 +1,12 @@
 package com.cinema.model;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDateTime;
+import org.apache.struts2.json.annotations.JSON;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Order
@@ -21,24 +21,26 @@ public class Order implements Serializable {
 	private long id;
 
 	@Column(name = "order_time")
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
-	private LocalDateTime orderTime;
+	private Date orderTime;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE})
 	private User user;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "cinema_sale_id")
 	private CinemaSale cinemaSale;
+
+	@Column(name = "is_comment")
+	private boolean isComment;
 
 	@OneToMany(
 			mappedBy = "order",
 			cascade = CascadeType.ALL,
-			orphanRemoval = false,
-			fetch = FetchType.LAZY
+			orphanRemoval = true,
+			fetch = FetchType.EAGER
 	)
 	@OrderBy("row_num asc, col_num asc")
-	private Set<Seat> seats = new TreeSet<Seat>();
+	private Set<Seat> seats = new HashSet<Seat>();
 
 	public long getId() {
 		return id;
@@ -48,11 +50,12 @@ public class Order implements Serializable {
 		this.id = id;
 	}
 
-	public LocalDateTime getOrderTime() {
+	@JSON(format = "yyyy-MM-dd HH:mm")
+	public Date getOrderTime() {
 		return orderTime;
 	}
 
-	public void setOrderTime(LocalDateTime orderTime) {
+	public void setOrderTime(Date orderTime) {
 		this.orderTime = orderTime;
 	}
 
@@ -78,5 +81,13 @@ public class Order implements Serializable {
 
 	public void setSeats(Set<Seat> seats) {
 		this.seats = seats;
+	}
+
+	public boolean isComment() {
+		return isComment;
+	}
+
+	public void setIsComment(boolean isComment) {
+		this.isComment = isComment;
 	}
 }

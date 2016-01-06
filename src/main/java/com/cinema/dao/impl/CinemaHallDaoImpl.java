@@ -3,7 +3,10 @@ package com.cinema.dao.impl;
 import com.cinema.dao.CinemaHallDao;
 import com.cinema.dao.generic.HibernatePageableDao;
 import com.cinema.model.CinemaHall;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * CinemaHallDaoImpl
@@ -15,5 +18,12 @@ public class CinemaHallDaoImpl extends HibernatePageableDao<CinemaHall, Long>
 
 	public CinemaHallDaoImpl() {
 		super(CinemaHall.class);
+	}
+
+	@Transactional
+	public CinemaHall findByName(String name) {
+		Criteria criteria = getCurrentSession().createCriteria(type);
+		criteria.add(Restrictions.eq("name", name));
+		return (CinemaHall) criteria.uniqueResult();
 	}
 }

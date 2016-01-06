@@ -38,6 +38,7 @@ public class HibernatePageableDao<T, ID extends Serializable>
 				criteria.addOrder(Property.forName(orderArgs[i]).desc());
 			}
 		}
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		criteria.setFirstResult(pageSize * (page - 1));
 		criteria.setMaxResults(pageSize);
 		return new PageResult<T>(page, pageSize, criteria.list(), this.count());

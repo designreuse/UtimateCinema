@@ -1,17 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="../templates/header.jsp"%>
-<link rel="stylesheet" href="<c:url value='/static/styles/common.css' />" />
+<%@ include file="../templates/header.jsp" %>
+<link rel="stylesheet" href="<c:url value='/static/styles/common.css' />"/>
 </head>
-
 <%@ include file="../templates/navbar.jsp" %>
 
 <div class="container">
     <div class="row" id="alert-row" style="display: none;">
         <div class="col-sm-12">
-            <div class="alert alert-danger alert-dismissible" >
+            <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <h4><i class="icon fa fa-ban"></i> 错误</h4>
+
                 <p id="alert-msg"></p>
             </div>
         </div>
@@ -21,28 +21,42 @@
         <div class="col-sm-12">
             <div class="box box-primary list-box">
                 <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-list"></i> 用户管理</h3>
+                    <h3 class="box-title"><i class="fa fa-list"></i> 影厅管理</h3>
+
                     <div class="box-tools">
-                        <button class="btn btn-default btn-sm to_refresh"><i class="fa fa-refresh"></i> &nbsp; 刷新列表</button>
+                        <button class="btn btn-default btn-sm to_refresh"><i class="fa fa-refresh"></i> &nbsp; 刷新列表
+                        </button>
                     </div>
                 </div>
                 <div class="box-body no-padding">
                     <div class="list-box-controls">
-                        <button class="btn btn-default btn-sm to_delete_item" data-toggle="modal" data-target="#delModal">
+                        <button class="btn btn-default btn-sm to_delete_item" data-toggle="modal"
+                                data-target="#delModal">
                             <i class="fa fa-trash-o"></i> 删除
                         </button>
                         <button class="btn btn-default btn-sm to_edit_item" data-toggle="modal" data-target="#addModal">
-                            <i class="fa fa-pencil-square-o"></i> 修改</button>
+                            <i class="fa fa-pencil-square-o"></i> 修改
+                        </button>
+                        <button class="btn btn-default btn-sm to_add_item" data-toggle="modal" data-target="#addModal">
+                            <i class="fa fa-pencil-square-o"></i> 添加
+                        </button>
                         <div class="pull-right">
                             <div class="btn-group">
-                                <button class="btn btn-default btn-sm prev-page"><i class="fa fa-chevron-left"></i></button>
-                                <button class="btn btn-default btn-sm next-page"><i class="fa fa-chevron-right"></i></button>
+                                <button class="btn btn-default btn-sm prev-page"><i class="fa fa-chevron-left"></i>
+                                </button>
+                                <button class="btn btn-default btn-sm next-page"><i class="fa fa-chevron-right"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
                     <table class="table table-bordered table-hover table-striped list-table">
                         <thead>
-                        <tr><th>选择</th><th>姓名</th><th>权限</th><th>邮箱</th><th>手机</th><th>性别</th><th>注册时间</th></tr>
+                        <tr>
+                            <th width="8%">选择</th>
+                            <th>影厅号</th>
+                            <th>行数</th>
+                            <th>列数</th>
+                        </tr>
                         </thead>
                         <tbody class="list-table-body"></tbody>
                     </table>
@@ -54,7 +68,6 @@
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="delModal" style="margin-top: 50px;">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -64,7 +77,7 @@
                 <h4 class="modal-title">警告</h4>
             </div>
             <div class="modal-body">
-                <p style="font-size: 1.4em;">是否确定删除当前选定用户！</p>
+                <p style="font-size: 1.4em;">是否确定删除当前选定的电影厅！</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger btn-flat delete_item">确定删除</button>
@@ -75,15 +88,16 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">添加影片</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addModalLabel">影厅详细信息</h4>
             </div>
             <div class="modal-body">
-                <%@ include file="form/user_form.jsp" %>
+                <%@include file="form/hall_form.jsp"%>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -92,8 +106,7 @@
         </div>
     </div>
 </div>
-
-<%@ include file="../templates/footer.jsp"%>
+<%@ include file="../templates/footer.jsp" %>
 <script>
     var $alertRow = $('#alert-row');
     var $alertMsg = $('#alert-msg');
@@ -101,24 +114,18 @@
     var pageSize = ${pageSize};
     var $container = $('.list-table-body');
 
-    var check_id = 'input[name="user"]:checked';
-    var get_url = "<%=basePath%>/users/get";
-    var one_url = "<%=basePath%>/users/one";
-    var del_url = "<%=basePath%>/users/del";
-    var edit_url = "<%=basePath%>/users/edit";
+    var check_id = 'input[name="hall"]:checked';
+    var get_url = "<%=basePath%>/halls/get";
+    var one_url = "<%=basePath%>/halls/one";
+    var del_url = "<%=basePath%>/halls/del";
+    var edit_url = "<%=basePath%>/halls/edit";
 
-
-    function generate_item(user) {
-        var ret = "<tr id='user" + user.id + "'>";
-        ret += "<td><label><input type='radio' name='user' value='" + user.id + "'></label></td>";
-        ret += "<td><b>" + user.username + "</b></td>";
-        if (user.admin) ret += "<td><label class='label label-danger'>管理员</label></td>";
-        else            ret += "<td><label class='label label-default'>用户</label></td>";
-        ret += "<td>" + user.email + "</td>";
-        ret += "<td>" + user.phone + "</td>";
-        if (user.sex)   ret += "<td>男</td>";
-        else            ret += "<td>女</td>";
-        ret += "<td>" + user.registerTime + "</td>";
+    function generate_item(hall) {
+        var ret = "<tr id='hall" + hall.id + "'>";
+        ret += "<td width='8%'><label><input type='radio' name='hall' value='" + hall.id + "'></label></td>";
+        ret += "<td><b>" + hall.name + "</b></td>";
+        ret += "<td>" + hall.rowSize + "</td>";
+        ret += "<td>" + hall.columnSize + "</td>";
         ret += "</tr>";
         return ret;
     }
@@ -139,7 +146,7 @@
             var length = items.length;
             $container.empty();
             if (length == 0) {
-                $container.append('<tr><td colspan="6"><h2>无用户</h2></tr>');
+                $container.append('<tr><td colspan="4"><h2>无影厅</h2></tr>');
             } else {
                 for (var i = 0; i < length; ++i) {
                     $container.append(generate_item(items[i]));
@@ -160,20 +167,22 @@
                 $next.show();
                 $next.val(page + 1);
             }
-        }).error(function() {
+        }).error(function () {
             $container.empty();
-            $container.append('<tr><td colspan="6"><h2>加载失败</h2></tr>');
+            $container.append('<tr><td colspan="4"><h2>加载失败</h2></tr>');
             $overlay.fadeOut(300);
             $prev.hide();
             $next.hide();
         });
     }
     function delete_item(url, checked) {
-        var data = { 'id': checked };
+        var data = {'id': checked};
         $.post(url, data).success(function (response) {
             $('.closeModal').click();
             if (response.ret == 'ok') {
-                $('#user' + checked).fadeOut(1200, function(){ $(this).remove(); });
+                $('#hall' + checked).fadeOut(1200, function () {
+                    $(this).remove();
+                });
             } else {
                 $alertMsg.html(response.error);
                 $alertRow.fadeIn();
@@ -181,7 +190,7 @@
         });
     }
     function add_or_edit_item(url, opt, id) {
-        var formData = new FormData($('#filmForm')[0]);
+        var formData = new FormData($('#hallForm')[0]);
         formData.append("opt", opt);
         if (opt == "edit") {
             formData.append("id", id);
@@ -192,17 +201,16 @@
             data: formData,
             processData: false,
             contentType: false,
-            success: function(response) {
-                var $response = $('#response');
+            success: function (response) {
                 if (response.ret == "ok") {
                     $('#addModal').modal('hide');
                     get_list($container, get_url, 1, pageSize);
                 } else {
                     $('#response-text').html('上传失败');
-                    $response.fadeIn();
+                    $('#response').fadeIn();
                 }
             },
-            error: function() {
+            error: function () {
                 $('#addModal').modal('hide');
                 $alertMsg.html("上传失败");
                 $alertRow.fadeIn();
@@ -210,11 +218,11 @@
         });
     }
     function get_one(url, id) {
-        var data = { "id" : id };
+        var data = {"id": id};
         var ret = null;
-        $.post(url, data, function(response) {
+        $.post(url, data, function (response) {
             ret = response.item;
-        }).success(function() {
+        }).success(function () {
             if (ret) {
                 for (var key in ret) {
                     var $input = $('#' + key);
@@ -229,11 +237,11 @@
         });
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         get_list($container, get_url, 1, pageSize);
 
-        $('button.to_refresh').click(function() {
+        $('button.to_refresh').click(function () {
             get_list($container, get_url, 1, pageSize);
         });
 
@@ -259,7 +267,11 @@
             delete_item(del_url, check);
         });
 
-        $('.to_edit_item').click(function() {
+        $('.to_add_item').click(function () {
+            $('.add-or-edit-item').data("opt", "add");
+        });
+
+        $('.to_edit_item').click(function () {
             var $check = $(check_id);
             if ($check.length <= 0) {
                 return false;
@@ -269,10 +281,11 @@
             $('.add-or-edit-item').data("opt", "edit").data("id", id);
         });
 
-        $('.add-or-edit-item').click(function() {
+        $('.add-or-edit-item').click(function () {
             add_or_edit_item(edit_url, $(this).data("opt"), $(this).data("id"));
             return false;
         });
+
 
     });
 </script>

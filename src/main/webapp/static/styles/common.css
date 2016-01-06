@@ -7,7 +7,8 @@ body {
     margin-bottom: 70px;
     background-color: #ecf0f5;
 }
-body > .container {
+body > .container,
+body > .container-fluid {
     padding: 70px 15px 0;
 }
 
@@ -45,10 +46,79 @@ body > .container {
 .list-table th,
 .list-table td {
     text-align: center;
-    vertical-align: middle;
+    vertical-align: middle !important;
 }
 
 .list-table .label {
     display: inline-block;
     margin-right: 2px;
+}
+
+.seat-tip {
+    height: 25px;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.seat-tip .seat-item,
+.seat-tip span {
+    margin: 0 7px;
+}
+
+.seat-table .seat-row {
+    text-align: center;
+    margin-bottom: 0!important;
+}
+
+.seat-table .row-num {
+    display: inline-block;
+    width: 40px;
+    margin-right: 20px;
+    vertical-align: middle;
+}
+
+.seat-table .row-num span {
+    width: 30px;
+    display: inline-block;
+}
+
+.seat-table .seat-item {
+    display: inline-block;
+    background: url("../image/sp-seats.png") no-repeat;
+    vertical-align: middle;
+    width: 20px;
+    height: 17px;
+    margin: 6px 2px;
+}
+
+
+.seat-table .active {
+    background-position: -27px 0;
+}
+
+.seat-table .disabled {
+    background-position: -52px 0;
+}
+
+.seat-table .selected {
+    background-position: -77px 0;
+}
+
+.order-content {
+    margin-top: 20px;
+    vertical-align: middle;
+}
+
+.order-content .table td {
+    vertical-align: middle;
+}
+
+.order-content #seat-choose .seat-ticket {
+    margin: auto 4px 2px auto;
+    display: inline-block;
+}
+.order-content #order-money span {
+    color: #b92c28;
+    font-size: 28px;
 }

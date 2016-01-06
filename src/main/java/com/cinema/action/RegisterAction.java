@@ -5,6 +5,7 @@ import com.cinema.dao.UserDao;
 import com.cinema.model.User;
 import com.cinema.util.LoginHelper;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -17,6 +18,7 @@ import java.util.Date;
  * RegisterAction
  * Created by rayn on 2015/12/27.
  */
+@ParentPackage("main")
 @Controller
 @Scope("prototype")
 public class RegisterAction extends BaseAction {
@@ -57,7 +59,7 @@ public class RegisterAction extends BaseAction {
 		user.setEmail(email);
 		user.setPhone(phone);
 		user.setSex(sex == 1);
-		user.setAdmin(true);
+		user.setAdmin(false);
 		user.setRegisterTime(new Date());
 		userDao.create(user);
 		try {
@@ -67,6 +69,19 @@ public class RegisterAction extends BaseAction {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return "json";
+	}
+
+	@Action(value = "/register/modify")
+	public String modify() {
+		User user = userDao.findByUsername(username);
+		user.setPassword(password);
+		user.setEmail(email);
+		user.setPhone(phone);
+		userDao.saveOrUpdate(user);
+		//更新session信息
+		session.setAttribute(LoginHelper.USER_SESSION,user);
+		jsonResponse.put("ret", JsonResult.OK);
 		return "json";
 	}
 

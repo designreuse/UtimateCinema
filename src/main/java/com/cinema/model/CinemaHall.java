@@ -1,9 +1,11 @@
 package com.cinema.model;
 
+import org.apache.struts2.json.annotations.JSON;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * CinemaHall
@@ -27,13 +29,13 @@ public class CinemaHall implements Serializable {
 	private int columnSize;
 
 	@OneToMany(
-			mappedBy = "film",
+			mappedBy = "cinemaHall",
 			cascade = CascadeType.ALL,
 			orphanRemoval = true,
 			fetch = FetchType.LAZY
 	)
 	@OrderBy("start_time asc")
-	private Set<CinemaSale> sales = new TreeSet<CinemaSale>();
+	private Set<CinemaSale> sales = new HashSet<CinemaSale>();
 
 	public long getId() {
 		return id;
@@ -67,6 +69,7 @@ public class CinemaHall implements Serializable {
 		this.columnSize = columnSize;
 	}
 
+	@JSON(serialize = false)
 	public Set<CinemaSale> getSales() {
 		return sales;
 	}

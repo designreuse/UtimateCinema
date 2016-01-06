@@ -10,4 +10,5 @@ import com.cinema.model.Film;
 public interface FilmDao extends PageableGenericDao<Film, Long> {
 
     Film findByFilmNameAndDirector(String filmName, String director);
+
 }

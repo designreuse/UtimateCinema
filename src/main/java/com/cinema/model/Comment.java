@@ -1,10 +1,10 @@
 package com.cinema.model;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDateTime;
+import org.apache.struts2.json.annotations.JSON;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Comment
@@ -22,13 +22,12 @@ public class Comment implements Serializable {
 	private String content;
 
 	@Column(name = "post_time")
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
-	private LocalDateTime postTime;
+	private Date postTime;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE})
 	private User user;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE})
 	private Film film;
 
 	public long getId() {
@@ -47,11 +46,12 @@ public class Comment implements Serializable {
 		this.content = content;
 	}
 
-	public LocalDateTime getPostTime() {
+	@JSON(format = "yyyy-MM-dd HH:mm:ss")
+	public Date getPostTime() {
 		return postTime;
 	}
 
-	public void setPostTime(LocalDateTime postTime) {
+	public void setPostTime(Date postTime) {
 		this.postTime = postTime;
 	}
 

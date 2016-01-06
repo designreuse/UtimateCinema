@@ -1,7 +1,9 @@
 package com.cinema.dao.generic;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Property;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +33,8 @@ public class HibernateCurdDao<T, ID extends Serializable>
 	@Transactional
 	@SuppressWarnings("unchecked")
 	public <S extends T> S create(S entity) {
-		return (S) getCurrentSession().save(entity);
+		Serializable id = getCurrentSession().save(entity);
+		return (S) getCurrentSession().get(type, id);
 	}
 
 	@Transactional
@@ -54,6 +57,20 @@ public class HibernateCurdDao<T, ID extends Serializable>
 	@SuppressWarnings("unchecked")
 	public List<T> findAll() {
 		return getCurrentSession().createQuery("from " + this.type.getName()).list();
+	}
+
+	@Transactional
+	@SuppressWarnings("unchecked")
+	public List<T> findAllWithOrder(String... orderArgs) {
+		Criteria criteria = getCurrentSession().createCriteria(type);
+		for (int i = 0; i < orderArgs.length; i += 2) {
+			if (orderArgs[i + 1].equals("asc")) {
+				criteria.addOrder(Property.forName(orderArgs[i]).asc());
+			} else if (orderArgs[i + 1].equals("desc")) {
+				criteria.addOrder(Property.forName(orderArgs[i]).desc());
+			}
+		}
+		return criteria.list();
 	}
 
 	@Transactional

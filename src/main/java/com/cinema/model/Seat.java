@@ -1,5 +1,7 @@
 package com.cinema.model;
 
+import org.apache.struts2.json.annotations.JSON;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -18,14 +20,14 @@ public class Seat implements Serializable {
 	@Column(name = "row_num")
 	private int rowNumber;
 
-	@Column(name = "col_name")
+	@Column(name = "col_num")
 	private int colNumber;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "cinema_sale_id", nullable = false)
 	private CinemaSale cinemaSale;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE})
 	private Order order;
 
 	public long getId() {
@@ -52,6 +54,7 @@ public class Seat implements Serializable {
 		this.colNumber = colNumber;
 	}
 
+	@JSON(serialize = false)
 	public CinemaSale getCinemaSale() {
 		return cinemaSale;
 	}
@@ -60,6 +63,7 @@ public class Seat implements Serializable {
 		this.cinemaSale = cinemaSale;
 	}
 
+	@JSON(serialize = false)
 	public Order getOrder() {
 		return order;
 	}

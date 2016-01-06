@@ -49,6 +49,7 @@ public class AdminFilmAction extends BaseAction {
     private File poster;
 
 
+
     public AdminFilmAction() {
         super(AdminFilmAction.class);
     }

@@ -9,11 +9,21 @@
 	<constant name="struts.i18n.encoding" value="UTF-8" />
 
 	<package name="main" extends="json-default" >
+		<result-types>
+			<result-type name="imageResult"
+						 class="com.cinema.util.ImageBytesResult"/>
+		</result-types>
+
 		<global-results>
 			<result name="json" type="json">
 				<param name="root">jsonResponse</param>
 			</result>
 		</global-results>
+
+		<action name="posterAction" class="com.cinema.action.film.PosterAction">
+			<result name="success" type="imageResult">
+			</result>
+		</action>
 	</package>
 
 	<package name="auth" extends="json-default" >

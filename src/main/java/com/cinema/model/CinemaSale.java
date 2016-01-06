@@ -1,11 +1,11 @@
 package com.cinema.model;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDateTime;
+import org.apache.struts2.json.annotations.JSON;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * CinemaSale
@@ -20,21 +20,19 @@ public class CinemaSale {
 	private long id;
 
 	@Column(name = "start_time")
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
-	private LocalDateTime startTime;
+	private Date startTime;
 
 	@Column(name = "end_time")
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
-	private LocalDateTime endTime;
+	private Date endTime;
 
 	@Column(scale = 2)
 	private double money;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "cinema_hall_id", nullable = false)
 	private CinemaHall cinemaHall;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE})
 	private Film film;
 
 	@OneToMany(
@@ -44,7 +42,7 @@ public class CinemaSale {
 			fetch = FetchType.LAZY
 	)
 	@OrderBy("order_time desc")
-	private Set<Order> orders = new TreeSet<Order>();
+	private Set<Order> orders = new HashSet<Order>();
 
 	@OneToMany(
 			mappedBy = "cinemaSale",
@@ -52,8 +50,8 @@ public class CinemaSale {
 			orphanRemoval = true,
 			fetch = FetchType.LAZY
 	)
-	@OrderBy("row_number asc, col_number asc")
-	private Set<Seat> seats = new TreeSet<Seat>();
+	@OrderBy("row_num asc, col_num asc")
+	private Set<Seat> seats = new HashSet<Seat>();
 
 
 	public long getId() {
@@ -64,19 +62,21 @@ public class CinemaSale {
 		this.id = id;
 	}
 
-	public LocalDateTime getStartTime() {
+	@JSON(format = "yyyy-MM-dd HH:mm")
+	public Date getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(LocalDateTime startTime) {
+	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
 
-	public LocalDateTime getEndTime() {
+	@JSON(format = "yyyy-MM-dd HH:mm")
+	public Date getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(LocalDateTime endTime) {
+	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
 
@@ -104,6 +104,7 @@ public class CinemaSale {
 		this.film = film;
 	}
 
+	@JSON(serialize = false)
 	public Set<Order> getOrders() {
 		return orders;
 	}
@@ -112,6 +113,7 @@ public class CinemaSale {
 		this.orders = orders;
 	}
 
+	@JSON(serialize = false)
 	public Set<Seat> getSeats() {
 		return seats;
 	}
