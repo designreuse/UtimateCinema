@@ -30,13 +30,13 @@ import java.util.Date;
 public class AdminFilmAction extends BaseAction {
 
     @Autowired
-    private FilmDao filmDao;
+    private FilmDao filmDao;                           //spring bean的自动装配
 
     private String title;
     private int page;
     private int pageSize;
 
-    // film upload
+    // film upload   jsp参数过来自动赋值
     private String opt;
     private long id;
     private String filmName;
@@ -59,19 +59,19 @@ public class AdminFilmAction extends BaseAction {
                     @Result(name = "success", location = "admin/films.jsp")
             }
     )
-    public String index() {
-        title = "电影管理";
+    public String index() {                                   //navbar 中影片管理的点击之后的action响应
+        title = "电影管理";                                  //pagesize值得设置用于jsp中的接收
         pageSize = 10;
         return SUCCESS;
     }
 
 
-    @Action(value = "/films/edit")
+    @Action(value = "/films/edit")                           //修改电影的时候
     public String addOrEditFilm() {
         byte[] fileContent = null;
         Film film;
         logger.debug(opt);
-        if (opt.equals("add")) {
+        if (opt.equals("add")) {                             //操作是add时
             Film has = filmDao.findByFilmNameAndDirector(filmName, director);
             if (has != null) {
                 jsonResponse.put("ret", JsonResult.FAIL);
@@ -79,11 +79,11 @@ public class AdminFilmAction extends BaseAction {
             }
 
             film = new Film();
-        } else {
+        } else {                                             //操作是edit时
             film = filmDao.findOne(id);
         }
         try {
-            if (poster != null) {
+            if (poster != null) {                          //海报不为空时。将海报转化成字节数组
                 fileContent = IOUtils.toByteArray(new FileInputStream(poster));
             }
         } catch (IOException e) {
@@ -97,18 +97,18 @@ public class AdminFilmAction extends BaseAction {
         film.setPoster(fileContent);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            film.setPremiereDate(sdf.parse(sdf.format(premiereDate)));
+            film.setPremiereDate(sdf.parse(sdf.format(premiereDate)));//格式化时间存入
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        film.setIntro(intro);
+        film.setIntro(intro);                                         //影片详情存入
         filmDao.saveOrUpdate(film);
         jsonResponse.put("ret", JsonResult.OK);
-        return "json";
+        return "json";                                               //返回JsonResponse
     }
 
 
-    @Action(value = "/films/get")
+    @Action(value = "/films/get")                    //页面显示刷新的时候
     public String filmList() {
         logger.info("page:" + page + "  pageSize:" + pageSize);
         PageResult pageResult = filmDao.findAllWithOrder(page, pageSize, "premiereDate", "desc");
@@ -118,14 +118,14 @@ public class AdminFilmAction extends BaseAction {
         return "json";
     }
 
-    @Action(value = "/films/one")
+    @Action(value = "/films/one")                    //查找id的电影
     public String film() {
         jsonResponse.put("ret", JsonResult.OK);
         jsonResponse.put("item", filmDao.findOne(id));
         return "json";
     }
 
-    @Action(value = "/films/del")
+    @Action(value = "/films/del")                   //删除id电影
     public String deleteFilm() {
         filmDao.delete(id);
         jsonResponse.put("ret", JsonResult.OK);
@@ -133,6 +133,7 @@ public class AdminFilmAction extends BaseAction {
     }
 
 
+    //getter setter方法
     public String getTitle() {
         return title;
     }

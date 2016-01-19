@@ -9,16 +9,17 @@
 	<constant name="struts.i18n.encoding" value="UTF-8" />
 
 	<package name="main" extends="json-default" >
-		<result-types>
+		<result-types>                                          <!--自定义类型，当是"imageResult"，返回其实是ImageBytesResult-->
 			<result-type name="imageResult"
 						 class="com.cinema.util.ImageBytesResult"/>
 		</result-types>
 
-		<global-results>
+		<global-results>                                      <!--自定义返回类型，当是"json"，返回其实是jsonResponse-->
 			<result name="json" type="json">
 				<param name="root">jsonResponse</param>
 			</result>
 		</global-results>
+
 
 		<action name="posterAction" class="com.cinema.action.film.PosterAction">
 			<result name="success" type="imageResult">
@@ -30,13 +31,13 @@
 		<interceptors>
 			<interceptor name="authority" class="com.cinema.util.LoginInterceptor" />
 			<interceptor-stack name="mydefault">
-				<interceptor-ref name="defaultStack" />
-				<interceptor-ref name="authority" />
+				<interceptor-ref name="defaultStack" />          <!--系统默认拦截器要显示添加进来-->
+				<interceptor-ref name="authority" />              <!--自定义授权拦截器-->
 			</interceptor-stack>
 		</interceptors>
-		<default-interceptor-ref name="mydefault" />
+		<default-interceptor-ref name="mydefault" />            <!--我的默认拦截器栈-->
 		<global-results>
-			<result name="login" type="redirect">
+			<result name="login" type="redirect">                <!--全局返回结果-->
 				<param name="location">/login</param>
 			</result>
 			<result name="admin" type="redirect">

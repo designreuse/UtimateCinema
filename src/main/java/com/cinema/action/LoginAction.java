@@ -41,9 +41,9 @@ public class LoginAction extends BaseAction {
 	)
 	public String index() {
 		return SUCCESS;
-	}
+	}                        //显示登录界面
 
-	@Action(value = "/login/verify")
+	@Action(value = "/login/verify")                                  //验证界面
 	public String login() {
 		logger.info(rememberMe);
 		User has = userDao.findByUsername(user.getUsername());

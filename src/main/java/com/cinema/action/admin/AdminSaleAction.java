@@ -43,24 +43,24 @@ public class AdminSaleAction extends BaseAction {
     private List<CinemaHall> hallList;
 
     private String title;
-    private String opt;
+    private String opt;               //opt是对应的操作类型
     private long id;
     private long filmId;
     private long hallId;
-    private String startTime;
+    private String startTime;       //电影开始时间，结束时间
     private String endTime;
     private double money;
 
     public AdminSaleAction() {
         super(AdminSaleAction.class);
-    }
+    }     //同样的将class类型传入
 
     @Action(value = "/sales",
             results = {
-                    @Result(name = "success", location = "admin/sales.jsp")
+                    @Result(name = "success", location = "admin/sales.jsp")    //返回到售票页面
             }
     )
-    public String index() {
+    public String index() {           //action对应的方法
         title = "放映管理";
         film = filmDao.findOne(filmId);
         saleSet = film.getSales();
@@ -68,16 +68,16 @@ public class AdminSaleAction extends BaseAction {
         return SUCCESS;
     }
 
-    @Action(value = "/sales/edit")
+    @Action(value = "/sales/edit")    //编辑订单action
     public String addOrEditSale() {
         logger.info(startTime + " - " + endTime);
         CinemaSale sale;
         film = filmDao.findOne(filmId);
         cinemaHall = cinemaHallDao.findOne(hallId);
         if (opt.equals("add")) {
-            sale = new CinemaSale();
+            sale = new CinemaSale();             //add new one
         } else {
-            sale = cinemaSaleDao.findOne(id);
+            sale = cinemaSaleDao.findOne(id);  //找寻原订单
         }
         sale.setFilm(film);
         sale.setCinemaHall(cinemaHall);
@@ -89,25 +89,27 @@ public class AdminSaleAction extends BaseAction {
             e.printStackTrace();
         }
         sale.setMoney(money);
-        cinemaSaleDao.saveOrUpdate(sale);
+        cinemaSaleDao.saveOrUpdate(sale);           //订单update
         jsonResponse.put("ret", JsonResult.OK);
-        return "json";
+        return "json";                             //??????
     }
 
-    @Action(value = "/sales/one")
+    @Action(value = "/sales/one")                  //查看订单
     public String sales() {
         jsonResponse.put("ret", JsonResult.OK);
         jsonResponse.put("item", cinemaSaleDao.findOne(id));
         return "json";
     }
 
-    @Action(value = "/sales/del")
+    @Action(value = "/sales/del")                 //删除订单
     public String deleteSale() {
         cinemaSaleDao.delete(id);
         jsonResponse.put("ret", JsonResult.OK);
         return "json";
     }
 
+
+    //变量的getter、setter
 
     public Set<CinemaSale> getSaleSet() {
         return saleSet;

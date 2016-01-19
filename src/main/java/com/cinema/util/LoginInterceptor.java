@@ -19,7 +19,7 @@ import java.util.Map;
  * LoginInterceptor
  * Created by rayn on 2015/12/28.
  */
-public class LoginInterceptor extends AbstractInterceptor {
+public class LoginInterceptor extends AbstractInterceptor {     //登录拦截器
 
     @Autowired
     private UserDao userDao;
@@ -29,9 +29,9 @@ public class LoginInterceptor extends AbstractInterceptor {
     public String intercept(ActionInvocation actionInvocation) throws Exception {
         ActionContext context = actionInvocation.getInvocationContext();
         Map<String, Object> session = context.getSession();
-        User current_user = (User) session.get(LoginHelper.USER_SESSION);
+        User current_user = (User) session.get(LoginHelper.USER_SESSION);   //session 中获取当前用户
         if (current_user != null) {
-            return actionInvocation.invoke();
+            return actionInvocation.invoke();                                //继续登录
         } else {
             HttpServletRequest request = ServletActionContext.getRequest();
             Cookie[] cookies = request.getCookies();

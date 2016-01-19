@@ -17,7 +17,7 @@ import java.util.*;
 
 /**
  * OrderAction
- * Created by rayn on 2015/12/29.
+ * Created by Fuzude on 2015/12/29.
  */
 @Controller
 @Scope("prototype")
@@ -124,30 +124,31 @@ public class OrderAction extends BaseAction {
                     @Result(name = "success", location = "/views/main/orders.jsp")
             }
     )
-    public String myOrders() {
-        title = "我的订单";
+    public String myOrders() {                        //点击我的订单之后的action响应
+        title = "我的订单";                          //这边的title赋值，header jsp接收
         return SUCCESS;
     }
 
-    @Action(value = "/orders/get")
+    @Action(value = "/orders/get")                  //生成order列表的时候，用js实现的url请求
     public String getOrders() {
-        User user = userDao.findOne(LoginHelper.getCurrentUser(session).getId());
+        User user = userDao.findOne(LoginHelper.getCurrentUser(session).getId());        //首先获取用户id
         logger.info("page:" + page + "pageSize:" + pageSize);
         if (user.isAdmin()) {
             PageResult<Order> pageResult = orderDao.findAllWithOrder(page, pageSize, "orderTime", "desc");
             jsonResponse.put("totalPage", pageResult.getPages());
             jsonResponse.put("page", page);
-            jsonResponse.put("items", pageResult.getItems());
+            logger.info(pageResult.getItems().size());
+            jsonResponse.put("items", pageResult.getItems());                         //管理员的话获取第一页20个？？？为什么只有7个
         } else {
             Set<Order> orderSet = user.getOrders();
             jsonResponse.put("totalPage", 1);
             jsonResponse.put("page", 1);
-            jsonResponse.put("items", orderSet);
+            jsonResponse.put("items", orderSet);                                      //用户的话获取user的orders
         }
         return "json";
     }
 
-    @Action(value = "/orders/addComment")
+    @Action(value = "/orders/addComment")                                            //点击评论之后，onclick方法响应
     public String addComment() {
         User user = userDao.findOne(LoginHelper.getCurrentUser(session).getId());
         Film film = filmDao.findOne(filmId);
@@ -158,8 +159,8 @@ public class OrderAction extends BaseAction {
         comment.setUser(user);
         commentDao.create(comment);
         Order order = orderDao.findOne(orderId);
-        order.setIsComment(true);
-        orderDao.saveOrUpdate(order);
+        order.setIsComment(true);                                                       //查看订单有么有评论，直接是加了一个字段
+        orderDao.saveOrUpdate(order);                                                  //知道用到评论的时候再去调用
         jsonResponse.put("ret", JsonResult.OK);
         return "json";
     }

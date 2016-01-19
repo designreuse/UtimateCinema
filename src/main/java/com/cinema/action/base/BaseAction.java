@@ -16,6 +16,9 @@ import java.util.Map;
  * BaseAction
  * Created by rayn on 2015/12/27.
  */
+
+
+//base action 规范了action的一般操作，定义logger，map等等一些必要的变量
 public class BaseAction extends ActionSupport {
 
 	protected Logger logger;
@@ -37,7 +40,7 @@ public class BaseAction extends ActionSupport {
 		session = request.getSession();
 	}
 
-	@JSON(name = "response")
+	@JSON(name = "response")      //将get方法返回的痛惜封装成json对象
 	public Map<String, Object> getJsonResponse() {
 		return jsonResponse;
 	}

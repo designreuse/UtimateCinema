@@ -42,7 +42,7 @@
         <h4 class="modal-title" id="myModalLabel">评价</h4>
       </div>
       <div class="modal-body">
-        <%@ include file="../admin/form/comment_form.jsp" %>
+        <%@ include file="../admin/form/comment_form.jsp" %>         <!--include评论表-->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -143,7 +143,7 @@
     formData.append("filmId", filmId);
     formData.append("orderId", orderId);
     $.ajax({
-      url: add_comment_url,
+      url: add_comment_url,                  //ajax 异步刷新
       type: "post",
       data: formData,
       processData: false,
@@ -151,7 +151,7 @@
       success: function(response) {
         if (response.ret == "ok") {
           $('#commentModal').modal('hide');
-          get_list($container, get_url, 1, pageSize);
+          get_list($container, get_url, 1, pageSize);    //列表重取
         } else{
           $('#response-text').html('上传失败');
           $('#response').fadeIn();
@@ -217,18 +217,18 @@
 
   $(document).ready(function() {
 
-    get_list($container, get_url, 1, pageSize);
+    get_list($container, get_url, 1, pageSize);                //获取列表
 
-    $('button.to_refresh').click(function() {
+    $('button.to_refresh').click(function() {                 //刷新，列表重取
       get_list($container, get_url, 1, pageSize);
     });
 
-    $('.prev-page').click(function () {
+    $('.prev-page').click(function () {                        //前一页
       var page = parseInt($(this).val());
       get_list($container, get_url, page, pageSize);
     });
 
-    $('.next-page').click(function () {
+    $('.next-page').click(function () {                        //后一页
       var page = parseInt($(this).val());
       get_list($container, get_url, page, pageSize);
     });

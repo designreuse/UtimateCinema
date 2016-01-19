@@ -88,7 +88,7 @@
         <h4 class="modal-title" id="myModalLabel">添加影片</h4>
       </div>
       <div class="modal-body">
-        <%@ include file="form/film_form.jsp" %>
+        <%@ include file="form/film_form.jsp" %>              <!--调用jsp表格-->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -106,7 +106,7 @@
   var $alertRow = $('#alert-row');
   var $alertMsg = $('#alert-msg');
 
-  var pageSize = ${pageSize};
+  var pageSize = ${pageSize};                       //pagesize的获取
   var $container = $('.list-table-body');
   var get_url = "<%=basePath%>/films/get";
   var one_url = "<%=basePath%>/films/one";
@@ -171,7 +171,7 @@
         $container.append('<tr><td colspan="7"><h2>无电影</h2></tr>');
       } else {
         for (var i = 0; i < length; ++i) {
-          $container.append(generate_item(items[i]));
+          $container.append(generate_item(items[i]));     //生成行元素之后，加到container之后
         }
       }
       $container.data('page', page);
@@ -259,45 +259,45 @@
 
   $(document).ready(function() {
 
-    var check_id = 'input[name="film"]:checked';
-    get_list($container, get_url, 1, pageSize);
+    var check_id = 'input[name="film"]:checked';        //获得checked电影id
+    get_list($container, get_url, 1, pageSize);          //获取电影列表
 
-    $('button.to_refresh').click(function() {
+    $('button.to_refresh').click(function() {           //电影列表刷新
       get_list($container, get_url, 1, pageSize);
     });
 
-    $('.prev-page').click(function () {
+    $('.prev-page').click(function () {                  //前一页刷新
       var page = parseInt($(this).val());
       get_list($container, get_url, page, pageSize);
     });
 
-    $('.next-page').click(function () {
+    $('.next-page').click(function () {                  //后一页刷新
       var page = parseInt($(this).val());
       get_list($container, get_url, page, pageSize);
     });
 
-    $('.to_delete_item').click(function () {
+    $('.to_delete_item').click(function () {            //想要删除的话，checked没选无效
       var $check = $(check_id);
       if ($check.length <= 0) {
         return false;
       }
     });
 
-    $('.delete_item').click(function () {
+    $('.delete_item').click(function () {                //确认删除影片
       var check = $(check_id).val();
       delete_item(del_url, check);
     });
-    $('.to_add_item').click(function() {
-      $('.add-or-edit-item').data("opt", "add");
+    $('.to_add_item').click(function() {                 //想要添加影片
+      $('.add-or-edit-item').data("opt", "add");       //添加操作选项opt=add
     });
 
-    $('.to_edit_item').click(function() {
+    $('.to_edit_item').click(function() {                //想要修改的没有check也不行
       var $check = $(check_id);
       if ($check.length <= 0) {
         return false;
       }
       var id = $check.val();
-      get_one(one_url, id);
+      get_one(one_url, id);                                 //添加操作选项opt=edit&id
       $('.add-or-edit-item').data("opt", "edit").data("id", id);
     });
 
@@ -305,15 +305,15 @@
       var pwd1 = $('#inputPassword').val();
       var pwd2 = $('#inputPassword2').val();
       if (pwd1 != pwd2) {
-        $('#response-text').html("两次密码输入不统一");
+        $('#response-text').html("两次密码输入不统一"); //给id=response-text标签赋值
         $('#response').fadeIn();
         return false;
       }
-      add_or_edit_item(edit_url, $(this).data("opt"), $(this).data("id"));
+      add_or_edit_item(edit_url, $(this).data("opt"), $(this).data("id"));//将url，操作类型，id传入
       return false;
     });
 
-    $('.to_intro').click(function() {
+    $('.to_intro').click(function() {                 //放映管理的时候，alert一下影片id
       alert($(this).data('id'));
     });
 

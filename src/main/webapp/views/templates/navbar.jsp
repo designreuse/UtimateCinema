@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<body class="skin-blue layout-top-nav fixed">
+<body class="skin-red layout-top-nav fixed">
 <header class="main-header">
   <nav class="navbar navbar-fixed-top">
     <div class="container-fluid">
@@ -63,11 +63,11 @@
         <h4 class="modal-title" id="myModalLabel">修改密码</h4>
       </div>
       <div class="modal-body">
-        <%@ include file="../admin/form/modify_form.jsp"%>
+        <%@ include file="../admin/form/modify_form.jsp"%>       <!--引入了一个modify form-->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary " onclick="modifyUser()">确认修改</button>
+        <button type="button" class="btn btn-primary " onclick="modifyUser()">确认修改</button> <!--midifyuser 脚本在footer中-->
       </div>
     </div>
   </div>

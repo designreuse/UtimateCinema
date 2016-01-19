@@ -30,8 +30,8 @@ public class AdminOrderAction extends BaseAction {
                     @Result(name = "success", location = "/views/admin/orders.jsp")
             }
     )
-    public String index() {
-        title = "全部订单";
+    public String index() {                                                      //navbar 中admin用户 点击所有订单
+        title = "全部订单";                                                     //title赋值有什么用呢？
         return SUCCESS;
     }
 

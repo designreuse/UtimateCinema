@@ -18,12 +18,12 @@ public class PosterAction extends BaseAction {
     @Autowired
     private FilmDao filmDao;
 
-    byte[] imageInByte;
-    private long id;
+    byte[] imageInByte;        //图片字节数组
+    private long id;           //图片id
 
     public PosterAction() {
         super(PosterAction.class);
-    }
+    }   //将类型传到基类action
 
     public String execute() {
         return SUCCESS;
@@ -46,7 +46,5 @@ public class PosterAction extends BaseAction {
         return "image/jpeg";
     }
 
-    public String getCustomContentDisposition() {
-        return "poster.jpg";
-    }
+    public String getCustomContentDisposition() { return "poster.jpg";}
 }

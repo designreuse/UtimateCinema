@@ -17,9 +17,17 @@
           </div>
         </div>
         <div class="box-body no-padding">
+          <div class="list-box-controls">
+            <div class="pull-right">
+              <div class="btn-group">
+                <button class="btn btn-default btn-sm prev-page"><i class="fa fa-chevron-left"></i></button>
+                <button class="btn btn-default btn-sm next-page"><i class="fa fa-chevron-right"></i></button>
+              </div>
+            </div>
+          </div>
           <table class="table table-bordered table-hover table-striped list-table">
             <thead>
-            <tr><td>订单用户</td><th>影名</th><th>放映时间</th><th>订单时间</th><th>影厅</th><th>座位</th><
+            <tr><td>订单用户</td><th>影名</th><th>放映时间</th><th>订单时间</th><th>影厅</th><th>座位</th>
               <th>金额</th></tr>
             </thead>
             <tbody class="list-table-body"></tbody>
@@ -39,7 +47,7 @@
   var $alertRow = $('#alert-row');
   var $alertMsg = $('#alert-msg');
 
-  var pageSize = 10;
+  var pageSize = 10;                                  //单页大小10，为什么只有6，7个？
   var $container = $('.list-table-body');
   var get_url = "<%=basePath%>/orders/get";
 
@@ -70,7 +78,7 @@
     var $next = $('.next-page');
 
     $overlay.fadeIn(300);
-    $.post(url, data).success(function (response) {
+    $.post(url, data).success(function (response) {       //从action中获取的是jsonResponse?返回不是"json"字符串嘛，为什么能够获取jsonResponse
       var totalPage = response.totalPage;
       var page = response.page;
       var items = response.items;
